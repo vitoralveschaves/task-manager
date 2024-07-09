@@ -4,6 +4,7 @@ import TaskSeparator from "./task-separator";
 import { useState } from "react";
 import { TASKS } from "../constants/tasks";
 import TaskItem from "./task-item";
+import { toast } from "sonner";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState(TASKS);
@@ -14,6 +15,7 @@ const Tasks = () => {
 
   const handleDeleteTask = (taskId: number) => {
     setTasks((prev) => prev.filter((t) => t.id !== taskId));
+    toast("Tarefa deletada com sucesso.");
   };
 
   const handleToggleStatusTask = (taskId: number) => {
@@ -21,12 +23,15 @@ const Tasks = () => {
       prev.map((task) => {
         if (task.id !== taskId) return task;
         if (task.status === "not_started") {
+          toast("Tarefa iniciada");
           return { ...task, status: "started" };
         }
         if (task.status === "started") {
+          toast("Tarefa concluida");
           return { ...task, status: "completed" };
         }
         if (task.status === "completed") {
+          toast("Tarefa reiniciada");
           return { ...task, status: "not_started" };
         }
 

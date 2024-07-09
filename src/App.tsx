@@ -1,3 +1,4 @@
+import { Toaster } from "sonner";
 import Sidebar from "./components/sidebar";
 import Tasks from "./components/tasks";
 
@@ -6,6 +7,7 @@ const App = () => {
     <div className="flex h-screen">
       <Sidebar />
       <Tasks />
+      <Toaster />
     </div>
   );
 };
