@@ -1,9 +1,11 @@
 import Sidebar from "./components/sidebar";
+import Tasks from "./components/tasks";
 
 const App = () => {
   return (
-    <div className="h-screen">
+    <div className="flex h-screen">
       <Sidebar />
+      <Tasks />
     </div>
   );
 };
