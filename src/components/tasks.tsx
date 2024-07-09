@@ -12,8 +12,12 @@ const Tasks = () => {
   const afterTasks = tasks.filter((t) => t.period === "afternoon");
   const nightTasks = tasks.filter((t) => t.period === "night");
 
+  const handleDeleteTask = (taskId: number) => {
+    setTasks((prev) => prev.filter((t) => t.id !== taskId));
+  };
+
   return (
-    <main className="flex-1 px-[34px] py-[70px]">
+    <main className="flex flex-1 flex-col px-[34px] py-[70px]">
       <div className="flex items-end justify-between">
         <div className="space-y-[6px]">
           {" "}
@@ -35,31 +39,49 @@ const Tasks = () => {
           </Button>
         </div>
       </div>
-      <section className="mt-6 space-y-6 rounded-xl bg-white p-6">
-        <div>
-          <TaskSeparator icon={<Sun />} title={"Manhã"} />
-          <div className="space-y-3">
-            {morningTasks.map((task) => (
-              <TaskItem key={task.id} task={task} />
-            ))}
+      <section className="mt-6 flex-1 space-y-6 rounded-xl bg-white p-6">
+        {morningTasks.length > 0 && (
+          <div>
+            <TaskSeparator icon={<Sun />} title={"Manhã"} />
+            <div className="space-y-3">
+              {morningTasks.map((task) => (
+                <TaskItem
+                  onDeleteClick={handleDeleteTask}
+                  key={task.id}
+                  task={task}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-        <div>
-          <TaskSeparator icon={<CloudSun />} title={"Tarde"} />
-          <div className="space-y-3">
-            {afterTasks.map((task) => (
-              <TaskItem key={task.id} task={task} />
-            ))}
+        )}
+        {afterTasks.length > 0 && (
+          <div>
+            <TaskSeparator icon={<CloudSun />} title={"Tarde"} />
+            <div className="space-y-3">
+              {afterTasks.map((task) => (
+                <TaskItem
+                  onDeleteClick={handleDeleteTask}
+                  key={task.id}
+                  task={task}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-        <div>
-          <TaskSeparator icon={<Moon />} title={"Noite"} />
-          <div className="space-y-3">
-            {nightTasks.map((task) => (
-              <TaskItem key={task.id} task={task} />
-            ))}
+        )}
+        {nightTasks.length > 0 && (
+          <div>
+            <TaskSeparator icon={<Moon />} title={"Noite"} />
+            <div className="space-y-3">
+              {nightTasks.map((task) => (
+                <TaskItem
+                  onDeleteClick={handleDeleteTask}
+                  key={task.id}
+                  task={task}
+                />
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </section>
     </main>
   );
