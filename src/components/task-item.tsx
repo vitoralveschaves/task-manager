@@ -4,9 +4,10 @@ import { Check, ExternalLink, Loader2, Trash2 } from "lucide-react";
 interface Props {
   task: Task;
   onDeleteClick: (taskId: number) => void;
+  onChangeStatus: (taskId: number) => void;
 }
 
-const TaskItem = ({ task, onDeleteClick }: Props) => {
+const TaskItem = ({ task, onDeleteClick, onChangeStatus }: Props) => {
   const getVariantClass = () => {
     if (task.status === "completed") {
       return "bg-teal-500/10";
@@ -34,13 +35,18 @@ const TaskItem = ({ task, onDeleteClick }: Props) => {
     >
       <div className="flex items-center gap-3">
         <label
-          className={`relative flex size-6 items-center justify-center rounded-md text-white ${getVariantClassLabel()}`}
+          className={`relative flex size-6 cursor-pointer items-center justify-center rounded-md text-white ${getVariantClassLabel()}`}
         >
           {task.status === "completed" && <Check size={16} />}
           {task.status === "started" && (
             <Loader2 size={16} className="animate-spin" />
           )}
-          <input type="checkbox" className="sr-only" />
+          <input
+            type="checkbox"
+            className="sr-only"
+            checked={task.status === "completed"}
+            onChange={() => onChangeStatus(task.id)}
+          />
         </label>
 
         {task.title}

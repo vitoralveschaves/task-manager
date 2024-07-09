@@ -16,6 +16,25 @@ const Tasks = () => {
     setTasks((prev) => prev.filter((t) => t.id !== taskId));
   };
 
+  const handleToggleStatusTask = (taskId: number) => {
+    setTasks((prev) =>
+      prev.map((task) => {
+        if (task.id !== taskId) return task;
+        if (task.status === "not_started") {
+          return { ...task, status: "started" };
+        }
+        if (task.status === "started") {
+          return { ...task, status: "completed" };
+        }
+        if (task.status === "completed") {
+          return { ...task, status: "not_started" };
+        }
+
+        return task;
+      }),
+    );
+  };
+
   return (
     <main className="flex flex-1 flex-col px-[34px] py-[70px]">
       <div className="flex items-end justify-between">
@@ -46,6 +65,7 @@ const Tasks = () => {
             <div className="space-y-3">
               {morningTasks.map((task) => (
                 <TaskItem
+                  onChangeStatus={handleToggleStatusTask}
                   onDeleteClick={handleDeleteTask}
                   key={task.id}
                   task={task}
@@ -60,6 +80,7 @@ const Tasks = () => {
             <div className="space-y-3">
               {afterTasks.map((task) => (
                 <TaskItem
+                  onChangeStatus={handleToggleStatusTask}
                   onDeleteClick={handleDeleteTask}
                   key={task.id}
                   task={task}
@@ -74,6 +95,7 @@ const Tasks = () => {
             <div className="space-y-3">
               {nightTasks.map((task) => (
                 <TaskItem
+                  onChangeStatus={handleToggleStatusTask}
                   onDeleteClick={handleDeleteTask}
                   key={task.id}
                   task={task}
