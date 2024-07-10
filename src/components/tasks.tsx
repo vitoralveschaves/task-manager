@@ -5,9 +5,12 @@ import { useState } from "react";
 import { TASKS } from "../constants/tasks";
 import TaskItem from "./task-item";
 import { toast } from "sonner";
+import AddTaskDialog from "./add-task-dialog";
+import { Task } from "../types/task";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState(TASKS);
+  const [showAddTaskDialog, setShowAddTaskDialog] = useState(false);
 
   const morningTasks = tasks.filter((t) => t.period === "morning");
   const afterTasks = tasks.filter((t) => t.period === "afternoon");
@@ -40,6 +43,10 @@ const Tasks = () => {
     );
   };
 
+  const handleAddNewTask = (newTask: Task) => {
+    setTasks((prev) => [...prev, newTask]);
+  };
+
   return (
     <main className="flex flex-1 flex-col px-[34px] py-[70px]">
       <div className="flex items-end justify-between">
@@ -57,10 +64,15 @@ const Tasks = () => {
             <Trash2 size={16} />
           </Button>
 
-          <Button>
+          <Button onClick={() => setShowAddTaskDialog(true)}>
             Nova tarefa
             <Plus size={16} />
           </Button>
+          <AddTaskDialog
+            isOpen={showAddTaskDialog}
+            onCloseClick={() => setShowAddTaskDialog(false)}
+            onAddTaskClick={handleAddNewTask}
+          />
         </div>
       </div>
       <section className="mt-6 flex-1 space-y-6 rounded-xl bg-white p-6">
